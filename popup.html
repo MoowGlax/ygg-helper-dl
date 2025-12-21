@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YggTorrent Helper</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <h2>YggTorrent Bypass</h2>
+    
+    <div class="guide">
+      <p>Entrez l'ID du torrent pour télécharger directement.</p>
+      <div class="image-container">
+        <!-- L'utilisateur pourra remplacer cette image par une vraie capture d'écran -->
+        <img src="images/guide.png" alt="Où trouver l'ID ?" id="guide-img" onerror="this.style.display='none'; document.getElementById('alt-text').style.display='block';">
+        <div id="alt-text" style="display:none; padding: 20px; background: #eee; text-align: center;">
+          <p>ℹ️ L'ID se trouve dans l'URL de la page du torrent.</p>
+          <p>Exemple: .../film/video/<strong>12345</strong>-nom-du-film</p>
+          <p><em>(Placez une image 'guide.png' dans le dossier images/ pour voir l'exemple)</em></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="torrentId">ID du Torrent :</label>
+      <input type="text" id="torrentId" placeholder="Ex: 123456">
+    </div>
+
+    <button id="downloadBtn">🚀 Télécharger sans attendre</button>
+    
+    <div id="status"></div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
