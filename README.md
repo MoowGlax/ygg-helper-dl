@@ -11,7 +11,6 @@ Une extension web légère et rapide pour contourner le temps d'attente de tél�
 - **Bypass du Timer** : Génère un lien de téléchargement direct (`/engine/download_torrent?id=...`) sans attendre les 30 secondes.
 - **Notification Intelligente** : Affiche une notification discrète en bas de page avec un bouton "Télécharger maintenant".
 - **Interface Popup** : Permet de saisir manuellement un ID si nécessaire.
-- **Mode Furtif** : Le code de l'extension est obfusqué pour plus de discrétion.
 
 ## 📦 Installation
 
