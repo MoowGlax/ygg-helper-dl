@@ -1,13 +1,16 @@
-document.addEventListener('DOMContentLoaded', function() {
+// popup.js
+// Version Universelle - Utilise browser.* API via polyfill (Chrome + Firefox)
+
+document.addEventListener('DOMContentLoaded', function () {
   // Tabs Logic
   const tabs = document.querySelectorAll('.tab');
   const contents = document.querySelectorAll('.tab-content');
-  
+
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       tabs.forEach(t => t.classList.remove('active'));
       contents.forEach(c => c.classList.remove('active'));
-      
+
       tab.classList.add('active');
       document.getElementById(tab.dataset.tab).classList.add('active');
     });
@@ -18,8 +21,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const idInput = document.getElementById('torrentId');
   const statusDiv = document.getElementById('status');
 
-  // Auto-detect ID
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+  // Auto-detect ID - Utilise browser.tabs.query (Promise-based via polyfill)
+  browser.tabs.query({ active: true, currentWindow: true }).then(function (tabs) {
     if (tabs[0] && tabs[0].url) {
       const url = tabs[0].url;
       const match = url.match(/\/(\d+)-/);
@@ -29,9 +32,11 @@ document.addEventListener('DOMContentLoaded', function() {
         statusDiv.style.color = "#2ecc71";
       }
     }
+  }).catch(function (error) {
+    console.error("[YggHelper] Erreur tabs.query:", error);
   });
 
-  downloadBtn.addEventListener('click', function() {
+  downloadBtn.addEventListener('click', function () {
     const id = idInput.value.trim();
     if (!id) {
       statusDiv.innerText = "❌ Veuillez entrer un ID valide.";
@@ -39,9 +44,16 @@ document.addEventListener('DOMContentLoaded', function() {
       return;
     }
     const downloadUrl = `https://www.yggtorrent.org/engine/download_torrent?id=${id}`;
-    chrome.tabs.create({ url: downloadUrl });
-    statusDiv.innerText = "✅ Téléchargement lancé !";
-    statusDiv.style.color = "#2ecc71";
+
+    // browser.tabs.create retourne une Promise
+    browser.tabs.create({ url: downloadUrl }).then(function () {
+      statusDiv.innerText = "✅ Téléchargement lancé !";
+      statusDiv.style.color = "#2ecc71";
+    }).catch(function (error) {
+      console.error("[YggHelper] Erreur tabs.create:", error);
+      statusDiv.innerText = "❌ Erreur lors du téléchargement";
+      statusDiv.style.color = "#d9534f";
+    });
   });
 
   // --- Passkey Logic ---
@@ -49,20 +61,27 @@ document.addEventListener('DOMContentLoaded', function() {
   const savePasskeyBtn = document.getElementById('savePasskeyBtn');
   const passkeyStatus = document.getElementById('passkeyStatus');
 
-  // Load saved passkey
-  chrome.storage.local.get(['yggPasskey'], function(result) {
+  // Load saved passkey - browser.storage.local.get (Promise-based via polyfill)
+  browser.storage.local.get(['yggPasskey']).then(function (result) {
     if (result.yggPasskey) {
       passkeyInput.value = result.yggPasskey;
     }
+  }).catch(function (error) {
+    console.error("[YggHelper] Erreur storage.get:", error);
   });
 
-  savePasskeyBtn.addEventListener('click', function() {
+  savePasskeyBtn.addEventListener('click', function () {
     const pk = passkeyInput.value.trim();
     if (pk) {
-      chrome.storage.local.set({yggPasskey: pk}, function() {
+      // browser.storage.local.set (Promise-based via polyfill)
+      browser.storage.local.set({ yggPasskey: pk }).then(function () {
         passkeyStatus.innerText = "✅ Passkey sauvegardé !";
         passkeyStatus.style.color = "#28a745";
         setTimeout(() => passkeyStatus.innerText = "", 3000);
+      }).catch(function (error) {
+        console.error("[YggHelper] Erreur storage.set:", error);
+        passkeyStatus.innerText = "❌ Erreur de sauvegarde";
+        passkeyStatus.style.color = "#d9534f";
       });
     } else {
       passkeyStatus.innerText = "❌ Passkey vide";
