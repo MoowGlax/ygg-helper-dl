@@ -1,5 +1,6 @@
 // content.js
 // Intégration de TurboBlague (par Coronawalrus) et Timer Bypass (par MoowGlax)
+// Version Universelle - Utilise browser.* API via polyfill (Chrome + Firefox)
 
 (function() {
   const url = window.location.href;
@@ -24,14 +25,16 @@
   
   if (infoTable) {
     // On récupère le passkey stocké par l'utilisateur
-    chrome.storage.local.get(['yggPasskey'], function(result) {
+    // Utilise browser.* (fonctionne sur Chrome via polyfill et Firefox nativement)
+    browser.storage.local.get(['yggPasskey']).then(function(result) {
       if (result.yggPasskey) {
         injectMagnetLink(result.yggPasskey, infoTable);
       } else {
         console.log("[YggHelper] Passkey non configuré. Le bypass Magnet est désactivé.");
-        // On pourrait ajouter un petit lien dans la notification pour inciter à configurer le passkey
         promptPasskeyConfig();
       }
+    }).catch(function(error) {
+      console.error("[YggHelper] Erreur storage:", error);
     });
   }
 })();
@@ -84,8 +87,6 @@ function injectMagnetLink(passKey, infoTable) {
     const name = nameRow ? nameRow.innerText.trim() : "Torrent";
 
     // Extraction du Hash : 5ème ligne, dernière colonne
-    // TurboBlague: infoTable.find('tr:nth-child(5) td:last-child').clone().children().remove().end().text();
-    // En JS pur, on doit s'assurer de ne prendre que le texte direct, sans les enfants (comme les span potentiels)
     const hashRow = infoTable.querySelector('tr:nth-child(5) td:last-child');
     let hash = "";
     if (hashRow) {
