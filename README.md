@@ -53,18 +53,7 @@ Cette extension n'est pas disponible sur le Chrome Web Store. Vous avez deux opt
 
 ## 🦊 Installation sur Firefox
 
-Pour éviter tout conflit avec la version Chrome, une version spécifique pour Firefox a été générée dans le dossier `firefox_dist`.
-
-1. **Ouvrir le débogueur** :
-   - Tapez `about:debugging` dans la barre d'adresse.
-   - Cliquez sur **"Ce Firefox"** (This Firefox) dans le menu de gauche.
-
-2. **Charger l'extension** :
-   - Cliquez sur **"Charger un module complémentaire temporaire..."** (Load Temporary Add-on).
-   - Naviguez dans le dossier `firefox_dist` (créé à la racine du projet).
-   - Sélectionnez le fichier **`manifest.json`** qui s'y trouve.
-
-> **Note** : Sur Firefox, l'extension sera supprimée si vous fermez totalement le navigateur.
+**WIP** 
 
 ## 🛠️ Utilisation
 
