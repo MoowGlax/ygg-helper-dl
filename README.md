@@ -1,61 +1,84 @@
-# ⚡ YggTorrent Helper (Timer Bypass & Magnet)
+# ⚡ YggTorrent Helper (Smart Timer)
 
-![Version](https://img.shields.io/badge/version-1.2-blue.svg)
+![Version](https://img.shields.io/badge/version-1.3-blue.svg)
 ![Compatibility](https://img.shields.io/badge/browser-Chrome%20%7C%20Opera-red.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-Une extension web complète pour YggTorrent qui permet de contourner le temps d'attente et de générer des liens Magnet instantanément.
+Une extension web optimisée pour YggTorrent qui gère intelligemment le temps d'attente de téléchargement pour vous permettre de naviguer librement. Plus besoin d'attendre 30 secondes devant votre écran !
+
+![Interface Principale](images/page_principal.png)
 
 ## 🚀 Fonctionnalités
 
-- **Bypass du Timer** : Téléchargement direct du `.torrent` sans attendre les 30 secondes.
-- **Génération Magnet (TurboBlague)** : Créez des liens magnet instantanément en utilisant votre Passkey.
-- **Intégration Fluide** :
-  - Bouton **"🧲 Magnet"** ajouté directement sur la page du torrent.
-  - Notification intelligente en bas de page avec options de téléchargement rapide.
-- **Open Source** : Code clair, lisible et auditable. Plus d'obfuscation.
-- **Gestion du Passkey** : Sauvegardez votre Passkey sécurisé dans l'extension pour la génération des magnets.
+- **Smart Timer** : Lance automatiquement le compte à rebours de 30s côté serveur dès que vous arrivez sur la fiche d'un torrent.
+- **File d'attente Intelligente** :
+  - **Actifs** : Les téléchargements en cours de traitement.
+  - **En attente** : Si vous ouvrez plusieurs onglets, les suivants sont mis en attente pour ne pas bloquer le système (un seul timer à la fois).
+  - **Démarrage Manuel** : Lancez les téléchargements en attente d'un simple clic quand le précédent est fini.
+- **Navigation Libre** : Grâce au Service Worker, le timer continue même si vous fermez l'onglet ou naviguez ailleurs.
+- **Mises à jour Automatiques** : Système de notification intégré pour vous avertir des nouvelles versions disponibles sur GitHub.
+
+![Notification de Mise à jour](images/update_notif.png)
 
 ## 📦 Installation
 
-Cette extension n'est pas disponible sur le Chrome Web Store. Vous devez l'installer manuellement (Mode Développeur).
+Cette extension n'est pas disponible sur le Chrome Web Store. Vous avez deux options pour l'installer.
+
+### Option 1 : Via le fichier .crx (Recommandé)
+
+1. **Télécharger l'extension** :
+   - Rendez-vous dans la section [Releases](https://github.com/MoowGlax/ygg-helper-dl/releases) et téléchargez le dernier fichier `.crx`.
+
+2. **Ouvrir les extensions** :
+   - Dans votre navigateur, ouvrez la page de gestion des extensions :
+     - Chrome : `chrome://extensions`
+     - Opera : `opera://extensions`
+     - Edge : `edge://extensions`
+
+3. **Installer** :
+   - Activez le **Mode développeur** (en haut à droite).
+   - Glissez-déposez le fichier `.crx` téléchargé directement dans la page des extensions.
+   - Acceptez l'installation si demandé.
+
+### Option 2 : Via le code source (Développement)
 
 1. **Télécharger le projet** :
-   - Clonez ce dépôt ou téléchargez le fichier ZIP.
+   - Clonez ce dépôt ou téléchargez le fichier ZIP (Code > Download ZIP) et décompressez-le.
    
-2. **Ouvrir le gestionnaire d'extensions** :
-   - **Chrome** : Allez sur `chrome://extensions`
-   - **Opera** : Allez sur `opera://extensions`
+2. **Charger l'extension** :
+   - Allez sur la page des extensions (`chrome://extensions`).
+   - Activez le **Mode développeur**.
+   - Cliquez sur **"Charger l'extension non empaquetée"** (Load unpacked).
+   - Sélectionnez le dossier racine du projet.
 
-3. **Activer le Mode Développeur** :
-   - Cochez la case ou activez l'interrupteur "Mode développeur" (généralement en haut à droite).
+## 🦊 Installation sur Firefox
 
-4. **Charger l'extension** :
-   - Cliquez sur le bouton **"Charger l'extension non empaquetée"** (Load unpacked).
-   - Sélectionnez le dossier racine de ce projet (`ygg_timer_bypass`).
+Pour éviter tout conflit avec la version Chrome, une version spécifique pour Firefox a été générée dans le dossier `firefox_dist`.
+
+1. **Ouvrir le débogueur** :
+   - Tapez `about:debugging` dans la barre d'adresse.
+   - Cliquez sur **"Ce Firefox"** (This Firefox) dans le menu de gauche.
+
+2. **Charger l'extension** :
+   - Cliquez sur **"Charger un module complémentaire temporaire..."** (Load Temporary Add-on).
+   - Naviguez dans le dossier `firefox_dist` (créé à la racine du projet).
+   - Sélectionnez le fichier **`manifest.json`** qui s'y trouve.
+
+> **Note** : Sur Firefox, l'extension sera supprimée si vous fermez totalement le navigateur.
 
 ## 🛠️ Utilisation
 
-### Pour le téléchargement direct (.torrent)
-1. Naviguez sur une page de torrent.
-2. Une notification apparaît en bas à droite.
-3. Cliquez sur **"Télécharger maintenant"**.
+1. Naviguez sur YggTorrent comme d'habitude.
+2. Ouvrez la fiche d'un torrent.
+3. Une notification discrète "⚡ Helper" apparaît en bas à droite pour confirmer la prise en charge.
+4. Le timer démarre en arrière-plan. Vous pouvez continuer à naviguer !
+5. Ouvrez l'extension (clic sur l'icône ⚡) pour voir l'état de vos téléchargements.
+6. Une fois le timer terminé, cliquez sur "Télécharger" pour lancer le téléchargement.
 
-### Pour les liens Magnet 🧲
-1. Cliquez sur l'icône de l'extension et allez dans l'onglet **"Réglages"**.
-2. Entrez votre **Passkey** (disponible dans votre profil Ygg ou dans l'URL d'un fichier .torrent téléchargé).
-3. Sauvegardez.
-4. Sur la page du torrent, un nouveau bouton **"🧲 Magnet"** apparaîtra sous le bouton de téléchargement habituel.
+## 🤝 Contribution
 
-## 🤝 Crédits
-
-Ce projet est le fruit de la collaboration communautaire :
-
-- **Extension & Intégration** : MoowGlax
-- **Logique Magnet / TurboBlague** : [Coronawalrus](https://github.com/coronawalrus)
-
-> "C'est la communauté qui vous fait vivre, ne l'oubliez jamais."
+Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une Issue ou une Pull Request.
 
 ## ⚠️ Avertissement
 
-Ce projet est à but éducatif uniquement. L'auteur n'est pas responsable de l'utilisation qui en est faite. Assurez-vous de respecter les conditions d'utilisation des sites que vous visitez.
+Ce projet est à but éducatif et personnel uniquement. L'auteur n'est pas responsable de l'utilisation qui en est faite. Assurez-vous de respecter les conditions d'utilisation des sites que vous visitez et les lois en vigueur dans votre pays concernant le téléchargement.

@@ -1,85 +1,264 @@
+:root {
+  --bg-color: #0f172a;
+  --card-bg: #1e293b;
+  --header-bg: #1e293b;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --accent-blue: #3b82f6;
+  --accent-purple: #8b5cf6;
+  --accent-green: #10b981;
+  --border-radius: 12px;
+}
+
 body {
   width: 350px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 450px;
   margin: 0;
-  padding: 0;
-  background-color: #f4f4f4;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
 }
 
-.container {
-  padding: 20px;
-  background-color: white;
+/* Header */
+.app-header {
+  background-color: var(--header-bg);
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #334155;
 }
 
-h2 {
-  margin-top: 0;
-  color: #333;
-  text-align: center;
-  font-size: 18px;
-}
-
-.guide {
-  margin-bottom: 20px;
-  font-size: 13px;
-  color: #666;
-}
-
-.image-container {
-  border: 1px dashed #ccc;
-  margin-top: 10px;
-  border-radius: 4px;
-  overflow: hidden;
-  min-height: 100px;
+.logo-area {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 12px;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
+.logo-icon {
+  font-size: 24px;
+  color: var(--accent-purple); /* Lightning icon color in screenshot */
 }
 
-.input-group {
-  margin-bottom: 15px;
+.logo-text h1 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
+.badge {
+  font-size: 11px;
+  background-color: rgba(59, 130, 246, 0.1); /* Transparent blue */
+  color: var(--accent-blue);
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin-left: 8px;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+.credits-btn {
+  cursor: pointer;
+  font-size: 16px;
+  transition: transform 0.2s;
+  color: #ef4444; /* Heart color */
+}
+
+.credits-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Stats Banner */
+.stats-banner {
+  background-color: #162032; /* Slightly darker than header */
+  padding: 12px 20px;
+  border-bottom: 1px solid #334155;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: 14px;
 }
 
-input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-sizing: border-box; /* Important for padding */
-  font-size: 16px;
+.stats-label {
+  color: var(--text-primary);
 }
 
-button {
-  width: 100%;
-  padding: 12px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.2s;
+.stats-value {
+  font-weight: 700;
+  color: var(--accent-purple);
+  margin-left: auto;
 }
 
-button:hover {
-  background-color: #0056b3;
+/* Content */
+.app-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
 }
 
-#status {
-  margin-top: 10px;
-  text-align: center;
+.section-title {
   font-size: 12px;
-  color: #d9534f;
+  text-transform: uppercase;
+  color: var(--text-secondary); /* Blueish grey */
+  margin-bottom: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.count-badge {
+  background-color: #334155;
+  color: var(--text-primary);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Timers List */
+.timers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.timer-card {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  padding: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid #334155;
+  transition: transform 0.2s;
+}
+
+.timer-card.pending {
+  border-left: 4px solid var(--accent-purple);
+  border-top: 1px solid #334155;
+  border-right: 1px solid #334155;
+  border-bottom: 1px solid #334155;
+}
+
+.timer-header {
+  margin-bottom: 12px;
+}
+
+.timer-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 280px;
+}
+
+/* Progress Bar */
+.timer-progress-container {
+  height: 6px;
+  background-color: #334155;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.timer-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #8b5cf6, #3b82f6); /* Purple to Blue gradient */
+  transition: width 1s linear;
+}
+
+/* Footer & Buttons */
+.timer-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.timer-status {
+  font-size: 13px;
+  color: var(--accent-green); /* "Prêt à télécharger" is green in screenshot */
+}
+
+.pending .timer-status {
+  color: var(--accent-purple); /* "En attente..." is purple in screenshot */
+}
+
+.action-btn {
+  background-color: var(--accent-green);
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.action-btn:hover {
+  opacity: 0.9;
+}
+
+.action-btn:disabled {
+  background-color: #475569;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Update Banner */
+.update-banner {
+  background-color: var(--accent-blue);
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.update-btn {
+  margin-left: auto;
+  background: rgba(255,255,255,0.2);
+  padding: 4px 10px;
+  border-radius: 4px;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Footer Clean Button */
+.app-footer {
+  padding: 15px 20px;
+  text-align: center;
+  margin-top: auto;
+}
+
+.secondary-btn {
+  background-color: transparent;
+  border: 1px solid #334155;
+  color: var(--text-secondary);
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.secondary-btn:hover {
+  background-color: #334155;
+  color: var(--text-primary);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-secondary);
 }

@@ -1,15 +1,21 @@
 {
   "manifest_version": 3,
-  "name": "YggTorrent Fast Download + Magnet",
-  "version": "1.2",
-  "description": "Bypass l'attente de téléchargement et la limite sur YggTorrent. Intègre TurboBlague.",
+  "name": "YggTorrent Helper (Smart Timer)",
+  "version": "1.3",
+  "description": "Gestion intelligente du timer de téléchargement sur YggTorrent.",
   "permissions": [
     "activeTab",
+    "downloads",
+    "notifications",
     "storage"
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "host_permissions": [
     "*://*.yggtorrent.org/*",
-    "*://yggtorrent.org/*"
+    "*://yggtorrent.org/*",
+    "https://raw.githubusercontent.com/*"
   ],
   "action": {
     "default_popup": "popup.html",

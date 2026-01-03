@@ -3,180 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YggTorrent Helper</title>
+  <title>YggHelper</title>
   <link rel="stylesheet" href="popup.css">
-  <style>
-    /* Tabs styling */
-    .tabs {
-      display: flex;
-      border-bottom: 1px solid #ddd;
-      margin-bottom: 15px;
-      background: #f8f9fa;
-    }
-    .tab {
-      flex: 1;
-      padding: 10px 5px;
-      text-align: center;
-      cursor: pointer;
-      font-size: 13px;
-      color: #666;
-      border-bottom: 2px solid transparent;
-      transition: all 0.2s;
-    }
-    .tab:hover {
-      background: #e9ecef;
-      color: #333;
-    }
-    .tab.active {
-      border-bottom: 2px solid #007bff;
-      color: #007bff;
-      font-weight: bold;
-      background: white;
-    }
-    .tab-content {
-      display: none;
-      animation: fadeIn 0.3s;
-    }
-    .tab-content.active {
-      display: block;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    /* Credits & Message styling */
-    .credits-box {
-      font-size: 12px;
-      color: #555;
-      background: #f0f8ff;
-      padding: 12px;
-      border-radius: 6px;
-      margin-top: 15px;
-      border: 1px solid #cce5ff;
-    }
-    .credits-box p {
-      margin: 5px 0;
-    }
-    .ygg-message {
-      margin-top: 20px;
-      padding: 15px;
-      background: #fff3cd;
-      color: #856404;
-      border: 1px solid #ffeeba;
-      border-radius: 6px;
-      font-size: 12px;
-      font-style: italic;
-      text-align: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
-    .ygg-message strong {
-      display: block;
-      margin-bottom: 5px;
-      font-style: normal;
-      text-transform: uppercase;
-      font-size: 10px;
-      letter-spacing: 1px;
-      color: #533f03;
-    }
-
-    /* Passkey input styling */
-    .passkey-section {
-      background: #e9ecef;
-      padding: 15px;
-      border-radius: 6px;
-      margin-bottom: 15px;
-    }
-    .passkey-input {
-      font-family: 'Consolas', monospace;
-      letter-spacing: 1px;
-      border: 1px solid #ced4da;
-    }
-    .btn-save {
-      background-color: #28a745;
-      margin-top: 10px;
-    }
-    .btn-save:hover {
-      background-color: #218838;
-    }
-    
-    /* Footer */
-    .footer {
-      text-align: center;
-      margin-top: 25px;
-      font-size: 10px;
-      color: #adb5bd;
-      border-top: 1px solid #eee;
-      padding-top: 10px;
-    }
-  </style>
 </head>
 <body>
-  <div class="container">
-    <div class="tabs">
-      <div class="tab active" data-tab="download">📥 Télécharger</div>
-      <div class="tab" data-tab="settings">⚙️ Réglages</div>
-      <div class="tab" data-tab="credits">❤️ Crédits</div>
-    </div>
-
-    <!-- Tab: Download -->
-    <div id="download" class="tab-content active">
-      <h2>Bypass Rapide</h2>
-      
-      <div class="guide">
-        <p>Si l'ID n'est pas détecté, entrez-le ci-dessous.</p>
-      </div>
-
-      <div class="input-group">
-        <label for="torrentId">ID du Torrent :</label>
-        <input type="text" id="torrentId" placeholder="Ex: 123456">
-      </div>
-
-      <button id="downloadBtn">🚀 Télécharger (Timer Bypass)</button>
-      <div id="status"></div>
-      
-      <div style="margin-top: 15px; font-size: 11px; color: #666; text-align: center;">
-        <em>Astuce : Configurez votre Passkey dans l'onglet "Réglages" pour débloquer le bypass de limite (Magnet).</em>
+  <header class="app-header">
+    <div class="logo-area">
+      <div class="logo-icon">⚡</div>
+      <div class="logo-text">
+        <h1>YggHelper</h1>
+        <span class="badge" id="appVersion"></span>
       </div>
     </div>
-
-    <!-- Tab: Settings -->
-    <div id="settings" class="tab-content">
-      <h2>Configuration</h2>
-      
-      <div class="passkey-section">
-        <label for="passkeyInput">Votre Passkey YggTorrent :</label>
-        <input type="text" id="passkeyInput" class="passkey-input" placeholder="xxxxxxxxxxxxxxxx">
-        <p class="small-note">Trouvez votre passkey dans votre profil YggTorrent ou dans un fichier .torrent téléchargé.</p>
-        <button id="savePasskeyBtn" class="btn-save">💾 Sauvegarder le Passkey</button>
-        <div id="passkeyStatus" style="margin-top: 8px; font-size: 12px; font-weight: bold; text-align: center;"></div>
-      </div>
-      
-      <div style="font-size: 11px; color: #666; line-height: 1.4;">
-        ℹ️ <strong>Pourquoi ?</strong> Le passkey est nécessaire pour générer des liens Magnet valides qui contournent la limite de téléchargement journalière. Il est stocké uniquement dans votre navigateur.
-      </div>
+    <div class="credits-btn" id="creditsLink" title="Développé par MoowGlax">
+      ❤️
     </div>
+  </header>
 
-    <!-- Tab: Credits -->
-    <div id="credits" class="tab-content">
-      <h2>À propos & Remerciements</h2>
-      
-      <div class="credits-box">
-        <p>🛠️ <strong>Extension & Interface :</strong> <span style="color: #007bff;">MoowGlax</span></p>
-        <p>⚡ <strong>Magnet Bypass (TurboBlague) :</strong> <span style="color: #d35400;">Coronawalrus</span></p>
-      </div>
-
-      <div class="ygg-message">
-        <strong>Message aux fondateurs d'Ygg</strong>
-        "C'est la communauté qui vous fait vivre, ne l'oubliez jamais."
-      </div>
-      
-      <div class="footer">
-        YggTorrent Helper v1.2 - Open Source
-      </div>
-    </div>
-
+  <div class="stats-banner">
+    <span class="stats-icon">⏳</span>
+    <span class="stats-label">Temps perdu à jamais:</span>
+    <span class="stats-value" id="wastedTimeDisplay">0s</span>
   </div>
+
+  <div id="updateBanner" class="update-banner" style="display: none;">
+    <span class="update-icon">🎉</span>
+    <div class="update-text">
+        <span class="update-title">Mise à jour disponible !</span>
+        <span class="update-version">v<span id="newVersion"></span></span>
+    </div>
+    <a href="#" id="updateLink" class="update-btn">Voir</a>
+  </div>
+
+  <main class="app-content">
+    <div class="section-title">
+      <span>Téléchargements Actifs</span>
+      <span class="count-badge" id="activeCount">0</span>
+    </div>
+
+    <div id="timersList" class="timers-list">
+      <!-- Les cartes seront injectées ici par popup.js -->
+    </div>
+
+    <div class="section-title" id="pendingSectionTitle" style="display:none; margin-top: 15px;">
+      <span>En attente</span>
+      <span class="count-badge" id="pendingCount">0</span>
+    </div>
+    <div id="pendingList" class="timers-list"></div>
+  </main>
+
+  <footer class="app-footer">
+    <button id="cleanAllBtn" class="secondary-btn">Tout nettoyer</button>
+  </footer>
+
   <script src="popup.js"></script>
 </body>
 </html>
